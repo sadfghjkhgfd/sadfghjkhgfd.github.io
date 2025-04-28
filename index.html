@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reCAPTCHA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body class="min-h-screen bg-[#202124] text-[#e8eaed] select-none cursor-pointer">
+    <div class="overflow-hidden">
+        <div id="errorMessage" class="checkbox-window flex flex-col mt-[15vh] mx-auto">
+            <div class="checkbox-container m-p">
+                <button type="button" id="checkbox" class="checkbox m-p line-normal"></button>
+            </div>
+            <p class="im-not-a-robot m-p line-normal">I'm not a robot</p>
+            <img src="https://www.google.com/recaptcha/about/images/reCAPTCHA-logo@2x.png" class="captcha-logo line-normal" alt="">
+            <br>
+            <p class="checkbox-desc m-p line-normal">
+            <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a> - <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
+            </p>
+            <img class="spinner" alt="" id="spinner">
+        </div>
+
+        <div class="scare hidden" id="scare" id="soundPlaying">
+          <video id="video" class="video" src="video.mp4" loop></video>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+              const errorMessage = document.getElementById('errorMessage');
+              const video = document.getElementById("video");
+              const scare = document.getElementById("scare");
+
+              function playSound() {
+                errorMessage.hidden = true;
+                scare.classList.remove('hidden');
+                video.play();
+                const { documentElement } = document;
+                if(documentElement.requestFullscreen) documentElement.requestFullscreen();
+                else if(documentElement.mozRequestFullScreen) documentElement.mozRequestFullScreen();
+                else if(documentElement.webkitRequestFullscreen) documentElement.webkitRequestFullscreen();
+                else if(documentElement.msRequestFullscreen) documentElement.msRequestFullscreen();
+              }
+
+               document.body.addEventListener('click', playSound, { once: true });
+        });
+    </script>
+  </body>
+</html>
